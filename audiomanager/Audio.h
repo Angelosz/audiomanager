@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 class Audio 
 {
 	const std::uint32_t sampleRate;
@@ -16,4 +15,8 @@ public:
 	{	}
 
 	void applyFadeOut(double seconds);
+
+	std::uint32_t getSampleRate();
+
+	void printInformation();
 };
