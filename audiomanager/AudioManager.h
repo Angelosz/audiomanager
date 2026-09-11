@@ -6,5 +6,5 @@ class AudioManager
 {
 public:
 	Audio loadAudio(const std::string filePath) const;
-	void saveAudio(const Audio& audio, std::string filepath) const;
+	void saveAudio(Audio& audio, std::string filepath);
 };
