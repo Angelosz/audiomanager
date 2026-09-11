@@ -3,13 +3,13 @@
 #include <fstream>
 #include <iostream>
 
-void Image::markPixel(std::size_t x, std::size_t y)
+void Image::markPixel(int x, int y)
 {
 	if (
 		x >= 0 && x < width &&
 		y >= 0 && y < height
 	) {
-		pixels[(width * y) + x] = Pixel(0, 0, 0);
+		pixels[static_cast<size_t>((width * y) + x)] = Pixel(0, 0, 0);
 	}
 }
 

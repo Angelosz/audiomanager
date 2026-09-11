@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace {
-    bool isValidAudioFile(std::ifstream& file) {
+    void readHeader(std::ifstream& file) {
         char riff[4];
         std::uint32_t size;
         char format[4];
@@ -12,14 +12,6 @@ namespace {
         file.read(riff, 4);
         file.read(reinterpret_cast<char*>(&size), sizeof(size));
         file.read(format, 4);
-
-        if (std::string(riff, 4) != "RIFF" ||
-            std::string(format, 4) != "WAVE")
-        {
-            return false;
-        }
-
-        return true;
     }
 
     void moveToNextChunk(std::ifstream& file, const std::uint32_t& chunkSize)
@@ -35,6 +27,8 @@ Audio AudioManager::loadAudio(std::string filePath) const
         filePath,
         std::ios::binary
     };
+
+    readHeader(file);
 
     std::uint32_t sampleRate{ 0 };
     std::uint16_t numChannels{ 0 };

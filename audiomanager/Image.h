@@ -16,16 +16,17 @@ class Image
 		}
 	};
 
-	std::size_t width, height;
+	int width, height;
 	std::vector<Pixel> pixels;
 
 public:
-	Image(std::size_t width, std::size_t height)
-		: width(width), height(height), pixels(width* height)
+	Image(int width, int height)
+		: width(width), height(height)
 	{
+		pixels.resize(static_cast<std::size_t>(width * height));
 	}
 
-	void markPixel(std::size_t x, std::size_t y);
+	void markPixel(int x, int y);
 
 	void savePPM(const std::string& filePath) const;
 };
