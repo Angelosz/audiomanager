@@ -36,16 +36,6 @@ Audio AudioManager::loadAudio(std::string filePath) const
         std::ios::binary
     };
 
-    if (!file) {
-        std::cout << "Error al abrir el archivo." << '\n';
-        return Audio(0, 0, 0, {});
-    }
-
-    if (!isValidAudioFile(file)) {
-        std::cout << "El archivo no es un WAV válido." << '\n';
-        return Audio(0, 0, 0, {});
-    }
-
     std::uint32_t sampleRate{ 0 };
     std::uint16_t numChannels{ 0 };
     std::uint16_t bitsPerSample{ 0 };
@@ -53,7 +43,6 @@ Audio AudioManager::loadAudio(std::string filePath) const
 
     while (file)
     {
-
         char chunkId[4];
         std::uint32_t chunkSize;
 
@@ -119,12 +108,10 @@ void AudioManager::saveAudio(Audio& audio, std::string filepath)
     const std::uint32_t dataSize = audio.getDataSize();
     const std::uint32_t fileSize = 4 + (8 + fmtChunkSize) + (8 + dataSize);
 
-    //file "header"
     file.write("RIFF", 4);
     file.write(reinterpret_cast<const char*>(&fileSize), sizeof(fileSize));
     file.write("WAVE", 4);
 
-    //fmt chunk
     file.write("fmt ", 4);
     file.write(reinterpret_cast<const char*>(&fmtChunkSize), sizeof(fmtChunkSize));
 
@@ -135,10 +122,7 @@ void AudioManager::saveAudio(Audio& audio, std::string filepath)
     file.write(reinterpret_cast<const char*>(&blockAlign), sizeof(blockAlign));
     file.write(reinterpret_cast<const char*>(&bitsPerSample), sizeof(bitsPerSample));
 
-    //data chunk
     file.write("data", 4);
     file.write(reinterpret_cast<const char*>(&dataSize), sizeof(dataSize));
     file.write(reinterpret_cast<const char*>(samples.data()), dataSize);
-
-
 }
