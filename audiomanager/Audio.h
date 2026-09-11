@@ -16,7 +16,12 @@ public:
 
 	void applyFadeOut(double seconds);
 
-	std::uint32_t getSampleRate();
+	std::uint32_t getSampleRate() const;
+	std::uint32_t getByteRate() const;
+	std::uint16_t getBlockAlign() const;
+	std::uint16_t getNumChannels() const;
+	std::uint16_t getBitsPerSample() const;
 
-	void printInformation();
+	std::vector<std::int16_t> getSamples() const;
+	std::uint32_t getDataSize() const;
 };
