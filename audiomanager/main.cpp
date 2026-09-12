@@ -8,8 +8,6 @@ int main()
 	AudioManager audioManager;
 	Audio audio = audioManager.loadAudio("resources/audio/background_music.wav");
 
-	std::cout << audio.getSampleRate();
-
 	WaveFormRenderer waveFormRenderer;
 	Image image = waveFormRenderer.renderAudioWave(audio, 1920, 1080);
 	image.savePPM("output/image_before.ppm");
