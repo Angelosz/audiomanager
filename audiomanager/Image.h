@@ -27,6 +27,7 @@ public:
 	}
 
 	void markPixel(int x, int y);
+	void drawVerticalLine(int x, int start, int end);
 
 	void savePPM(const std::string& filePath) const;
 };

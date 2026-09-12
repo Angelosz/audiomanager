@@ -13,6 +13,24 @@ void Image::markPixel(int x, int y)
 	}
 }
 
+void Image::drawVerticalLine(int x, int start, int end)
+{
+	if (
+		x >= 0 && x < width &&
+		start >= 0 && start < height &&
+		end >= 0 && end < height
+		) {
+		int pixel = start;
+		
+		while (pixel != end) {
+			if (pixel > end) pixel--;
+			else if (pixel < end) pixel++;
+
+			markPixel(x, pixel);
+		}
+	}
+}
+
 void Image::savePPM(const std::string& filePath) const
 {
 	std::ofstream file{

@@ -1,23 +1,35 @@
 #include "WaveFormRenderer.h"
 #include <iostream>
 
+
 Image WaveFormRenderer::renderAudioWave(Audio& audio, int width, int height)
 {
 	Image image(width, height);
 
-	for (size_t x{ 0 }; x < width; ++x)
+	for (size_t x{ 0 }; x < (width - 1); ++x)
 		image.markPixel(static_cast<int>(x), height / 2);
 
-	std::vector<std::int16_t> samples = audio.getSamples();
-	int audioSize = static_cast<int>(samples.size());
-	int samplesPerPixel = audioSize / width;
+	const std::vector<std::int16_t> samples = audio.getSamples();
+	const std::size_t audioSize = samples.size();
+	const std::size_t samplesPerPixel = audioSize / static_cast<size_t>(width);
 
-	// 1920 iteraciones
-	// cada iteración, miramos un número igual a samplesPerPixel de los samples, y escogemos los picos altos y bajos
-	// esos picos son los pixeles que marcaremos con los pixeles, despues de normalizarlos
-	
+	const int centerY = height / 2;
 
+	for (int column{ 0 }; column < width; ++column)
+	{
+		std::int16_t highestPeak{ 0 };
+		std::int16_t lowestPeak{ 0 };
 
+		for (std::size_t index{ 0 }; index < samplesPerPixel; ++index)
+		{
+			std::int16_t sample = samples[index + samplesPerPixel * column];
+			if (sample > highestPeak) highestPeak = sample;
+			else if (sample < lowestPeak) lowestPeak = sample;
+		}
+
+		image.drawVerticalLine(column, centerY - static_cast<int>((static_cast<double>(highestPeak) / 32768.0) * centerY), centerY);
+		image.drawVerticalLine(column, centerY - static_cast<int>((static_cast<double>(lowestPeak) / 32768.0) * centerY), centerY);
+	}
 
 	return image;
 }
