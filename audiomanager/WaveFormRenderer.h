@@ -7,5 +7,5 @@
 class WaveFormRenderer
 {
 public:
-	Image renderAudioWave(Audio& audio, int width, int height);
+	Image renderAudioWave(const Audio& audio, int width, int height);
 };

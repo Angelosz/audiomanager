@@ -3,8 +3,26 @@
 
 void Audio::applyFadeOut(double seconds)
 {
-	double seconds2 = seconds;
-	seconds2 = seconds2 + 3.0;
+    std::size_t lastSecondsFrames = static_cast<std::size_t>(seconds * sampleRate);
+    const std::size_t totalFrames = samples.size() / numChannels;
+
+    if (lastSecondsFrames > totalFrames)
+        lastSecondsFrames = totalFrames;
+
+    const std::size_t startingFrame = totalFrames - lastSecondsFrames;
+
+    for (std::size_t frame = startingFrame; frame < totalFrames; ++frame)
+    {
+        const double alphaProgress = static_cast<double>(frame - startingFrame) / static_cast<double>(lastSecondsFrames);
+        const double volume = 1.0 - alphaProgress;
+
+        for (std::size_t channel = 0; channel < numChannels; ++channel)
+        {
+            const std::size_t sampleIndex = frame * numChannels + channel;
+
+            samples[sampleIndex] = static_cast<std::int16_t>(samples[sampleIndex] * volume);
+        }
+    }
 }
 
 std::uint32_t Audio::getSampleRate() const
