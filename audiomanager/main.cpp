@@ -1,10 +1,13 @@
 #include <iostream>
+#include <filesystem>
 #include "AudioManager.h"
 #include "Image.h"
 #include "WaveFormRenderer.h"
 
 int main()
 {
+	std::filesystem::create_directories("output");
+
 	AudioManager audioManager;
 	Audio audio = audioManager.loadAudio("resources/audio/background_music.wav");
 
