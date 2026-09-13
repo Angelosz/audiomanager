@@ -54,4 +54,6 @@ void Image::savePPM(const std::string& filePath) const
 			sizeof(Pixel)
 		);
 	}
+
+	std::cout << "Image saved at :" << filePath << '\n';
 }

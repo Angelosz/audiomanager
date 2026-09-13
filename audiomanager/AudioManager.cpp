@@ -119,4 +119,6 @@ void AudioManager::saveAudio(Audio& audio, std::string filepath)
     file.write("data", 4);
     file.write(reinterpret_cast<const char*>(&dataSize), sizeof(dataSize));
     file.write(reinterpret_cast<const char*>(samples.data()), dataSize);
+
+    std::cout << "Audio saved at :" << filepath << '\n';
 }
