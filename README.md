@@ -1,0 +1,1 @@
+Prueba técnica en la que dado un archivo de audio ('resources/audio'), aplicamos un fade-out de x segundos, generando un nuevo archivo de audio. Además, renderizamos una imagen mostrando las amplitudes del audio, antes, y después del cambio.
